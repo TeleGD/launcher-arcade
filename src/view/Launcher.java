@@ -1,16 +1,17 @@
 package view;
 
-import javafx.application.Application;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-public class Main extends Application {
-    public static Scene scene;
-    @Override
+public class Launcher {
+    private static Launcher instance;
+
+    private Scene scene;
+
     public void start(Stage primaryStage) throws Exception{
+        instance = this;
         primaryStage.setTitle("Launcher TGD");
 
         GridPane root = new GridPane();
@@ -28,13 +29,15 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    public static void main(String[] args) {
-        launch(args);
+    public static Launcher getInstance() {
+        return instance;
     }
-    public static double getSizeX(){
+
+    public double getSizeX(){
         return scene.getWidth();
     }
-    public static double getSizeY(){
+
+    public double getSizeY(){
         return scene.getHeight();
     }
 }
