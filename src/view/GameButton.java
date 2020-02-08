@@ -12,7 +12,7 @@ public class GameButton extends VBox {
 
     //private GameData game;
 
-    public GameButton(String s, String imgPath) {
+    public GameButton(String s, String imgPath, GameGridView grid) {
 
         //temporaire, a terme on lira la texture dans GameData
         FileInputStream inputstream = null;
@@ -22,12 +22,11 @@ public class GameButton extends VBox {
         catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
         Image image = new Image(inputstream);
         ImageView imageView = new ImageView();
         imageView.setImage(image);
-        imageView.setFitWidth(Launcher.getInstance().getSizeX() / 3 - 15);
-        imageView.setFitHeight(Launcher.getInstance().getSizeY() / 3 - 15);
+        imageView.setFitWidth(grid.getSizeX() / 3 - 15);
+        imageView.setFitHeight(grid.getSizeY() / 3 - 30);
         imageView.setOnMouseClicked(event -> launchGame());
 
         Label label = new Label(s);
@@ -40,7 +39,7 @@ public class GameButton extends VBox {
         try
         {
             Runtime runtime = Runtime.getRuntime();
-            Process p = runtime.exec(new String[] {"../tgd-grave-et/make", "run"});
+            Process p = runtime.exec("../tgd-grave-et/run.sh");
 
             BufferedReader output = new BufferedReader(new InputStreamReader(p.getInputStream()));
             String ligne;

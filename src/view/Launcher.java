@@ -1,12 +1,13 @@
 package view;
 
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import model.GameData;
 
 public class Launcher {
     private static Launcher instance;
+    public static final String PURPLE =  "#6C2466";
 
     private Scene scene;
 
@@ -15,17 +16,18 @@ public class Launcher {
     }
 
     public void start(Stage primaryStage) throws Exception{
+        GameData game = new GameData("Grave-et", "meilleur jeu de tous les temps","",new String[]{"res/test/image1.jpg","res/test/image2.jpg"});
+
         primaryStage.setTitle("Launcher TGD");
-
-        GridPane root = new GridPane();
+        BorderPane root = new BorderPane();
         scene = new Scene(root, 1280, 720);
+        root.setTop(new TopView());
+        root.setBottom(new HelpView());
+        root.setCenter(new GameGridView());
+        GameView gameView = new GameView(game);
+        root.setRight(gameView);
+        gameView.update();
 
-        int number = 20;
-        for (int i = 0; i<number; i++){
-            GameButton gameButton = new GameButton("test"+i,i%2==0?"res/test/image1.jpg":"res/test/image2.jpg");
-            root.setMargin(gameButton,new Insets(5,5,5,5));
-            root.add(gameButton, i%3, i/3);
-        }
 
         //scene.getStylesheets().add("style.css");
         primaryStage.setScene(scene);
@@ -42,5 +44,9 @@ public class Launcher {
 
     public double getSizeY(){
         return scene.getHeight();
+    }
+
+    public void getGames(){
+
     }
 }
