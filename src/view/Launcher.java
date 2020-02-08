@@ -10,8 +10,11 @@ public class Launcher {
 
     private Scene scene;
 
-    public void start(Stage primaryStage) throws Exception{
+    public Launcher() {
         instance = this;
+    }
+
+    public void start(Stage primaryStage) throws Exception{
         primaryStage.setTitle("Launcher TGD");
 
         GridPane root = new GridPane();

@@ -8,7 +8,6 @@ import view.GameButton;
 import view.Launcher;
 
 public class Main extends Application {
-    public static Scene scene;
     @Override
     public void start(Stage primaryStage) throws Exception{
         Launcher launcher = new Launcher();

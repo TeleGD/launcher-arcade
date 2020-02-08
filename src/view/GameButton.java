@@ -5,8 +5,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+
+import java.io.*;
 
 public class GameButton extends VBox {
 
@@ -28,12 +28,42 @@ public class GameButton extends VBox {
         imageView.setImage(image);
         imageView.setFitWidth(Launcher.getInstance().getSizeX() / 3 - 15);
         imageView.setFitHeight(Launcher.getInstance().getSizeY() / 3 - 15);
+        imageView.setOnMouseClicked(event -> launchGame());
 
         Label label = new Label(s);
 
         getChildren().addAll(imageView, label);
         this.setAlignment(Pos.CENTER);
+    }
 
+    public void launchGame() {
+        try
+        {
+            Runtime runtime = Runtime.getRuntime();
+            Process p = runtime.exec(new String[] {"../tgd-grave-et/make", "run"});
 
+            BufferedReader output = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String ligne;
+            while ((ligne = output.readLine()) != null)
+            {
+                System.out.println(ligne);
+            }
+
+            BufferedReader error = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+            while ((ligne = error.readLine()) != null)
+            {
+                System.out.println(ligne);
+            }
+
+            p.waitFor();
+        }
+        catch (IOException e)
+        {
+            System.out.println(e.getMessage());
+        }
+        catch (InterruptedException e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
 }
