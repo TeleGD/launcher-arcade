@@ -1,12 +1,14 @@
 package model;
 
+import java.util.ArrayList;
+
 public class GameData {
     private String name;
     private String description;
     private String path;
-    private String[] images;
+    private ArrayList<String> images;
 
-    public GameData(String name, String description, String path, String[] images){
+    public GameData(String name, String description, String path, ArrayList<String> images){
         this.name = name;
         this.description = description;
         this.path = path;
@@ -21,7 +23,7 @@ public class GameData {
         return path;
     }
 
-    public String[] getImages() {
+    public ArrayList<String> getImages() {
         return images;
     }
 
