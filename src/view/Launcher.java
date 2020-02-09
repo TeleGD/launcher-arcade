@@ -61,13 +61,11 @@ public class Launcher {
 
     public void findGamesData() throws FileNotFoundException {
         ArrayList<String> path = new ArrayList<>();
-        Path dir = FileSystems.getDefault().getPath("../");
+        Path dir = FileSystems.getDefault().getPath("../games"); // placer les jeux dans un dossier games
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir)) {  // on liste les fichiers et dossiers
             for (Path file: stream) {
                 String a = file.getFileName().toString();
-                if (!a.equals( "tgd-launcher-arcade")) {
-                    path.add(a);
-                }
+                path.add(a);
             }
         } catch (IOException | DirectoryIteratorException x) {
             System.err.println(x);
@@ -76,20 +74,22 @@ public class Launcher {
         ArrayList<String> images;
         for (String p : path) {
             // trouver les noms et descriptions
-            File file = new File("../" +p + "/description.txt");
-            Scanner reader = new Scanner(file);
-            String name = reader.nextLine();
-            String description;
-            String u = reader.nextLine();
-            description = u+"\n";
-            while (reader.hasNextLine()){
-                u = reader.nextLine();
-                description+=u+"\n";
+            File file = new File("../games/" +p + "/description.txt");
+            String description = "";
+            String name = "";
+            if (file.exists()) {
+                Scanner reader = new Scanner(file);
+                name = reader.nextLine();
+                String u = reader.nextLine();
+                description = u + "\n";
+                while (reader.hasNextLine()) {
+                    u = reader.nextLine();
+                    description += u + "\n";
+                }
             }
-
             // trouver les images associés
             images = new ArrayList<>();
-            dir = FileSystems.getDefault().getPath("../"+p);
+            dir = FileSystems.getDefault().getPath("../games/"+p);
             try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir)) {  // on liste les fichiers et dossiers
                 for (Path f: stream) {
                     String a = f.getFileName().toString();
@@ -103,7 +103,7 @@ public class Launcher {
             } catch (IOException | DirectoryIteratorException x) {
                 System.err.println(x);
             }
-            gameData.add(new GameData(name, description,p,images)); // on sauvegarde tout dans un GameData
+            gameData.add(new GameData(name, description,"../games/"+p,images)); // on sauvegarde tout dans un GameData
         }
     }
 }

@@ -12,7 +12,12 @@ public class GameData {
         this.name = name;
         this.description = description;
         this.path = path;
-        this.images = images;
+        if (images.size() != 0) {
+            this.images = images;
+        }else{
+            this.images = new ArrayList<String>();
+            this.images.add("./res/test/image1.jpg"); // on met une image par défault
+        }
     }
 
     public String getName() {
