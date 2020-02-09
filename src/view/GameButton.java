@@ -39,7 +39,11 @@ public class GameButton extends VBox {
         try
         {
             Runtime runtime = Runtime.getRuntime();
-            Process p = runtime.exec(game.getPath()+"/run.sh");
+            //TODO : écrire la commande à exécuter dans le fichier run.sh
+            Process p = runtime.exec("./run.sh");
+
+            System.out.println(java.time.LocalTime.now());
+            //TODO : Baisser la fenetre
 
             BufferedReader output = new BufferedReader(new InputStreamReader(p.getInputStream()));
             String ligne;
@@ -55,6 +59,9 @@ public class GameButton extends VBox {
             }
 
             p.waitFor();
+
+            System.out.println(java.time.LocalTime.now());
+            //TODO : ouvrir la fenetre
         }
         catch (IOException e)
         {
