@@ -69,7 +69,7 @@ public class GameView extends VBox {
             imageView.setImage(image);
             grid.setMargin(imageView,new Insets(5,5,5,5));
             grid.add(imageView,i%2,i/2);
-            imageView.setFitWidth(400/2 - 20);
+            imageView.setFitWidth(400/2 - 10);
             imageView.setPreserveRatio(true);
             i+=1;
         }

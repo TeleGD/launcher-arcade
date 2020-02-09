@@ -38,7 +38,6 @@ public class Launcher {
         root.setRight(gameView);
         gameView.update();
 
-
         //scene.getStylesheets().add("style.css");
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -54,6 +53,10 @@ public class Launcher {
 
     public double getSizeY(){
         return scene.getHeight();
+    }
+
+    public ArrayList<GameData> getGamesData(){
+        return gameData;
     }
 
     public void findGamesData() throws FileNotFoundException {
@@ -94,22 +97,13 @@ public class Launcher {
                         String ext = a.substring(a.lastIndexOf(".")); //extension du fichier
                         if (ext.equals(".jpg") || ext.equals(".png")) {
                             images.add(f.toString());
-                            System.out.println(f);
                         }
                     }
                 }
             } catch (IOException | DirectoryIteratorException x) {
                 System.err.println(x);
             }
-            System.out.println(name);
-            System.out.println(description);
-            System.out.println(p);
-            System.out.println(images);
             gameData.add(new GameData(name, description,p,images)); // on sauvegarde tout dans un GameData
         }
-    }
-
-    public ArrayList<GameData> getGamesData(){
-        return gameData;
     }
 }

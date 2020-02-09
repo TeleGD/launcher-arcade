@@ -6,9 +6,9 @@ import javafx.scene.layout.GridPane;
 public class GameGridView extends GridPane {
 
     public GameGridView(){
-        int number = 9;
+        int number = Math.min(9, Launcher.getInstance().getGamesData().size()); // on dépasse l'space d'affichage
         for (int i = 0; i<number; i++){
-            GameButton gameButton = new GameButton("test"+i,i%2==0?"res/test/image1.jpg":"res/test/image2.jpg",this);
+            GameButton gameButton = new GameButton(Launcher.getInstance().getGamesData().get(i),this);
             this.setMargin(gameButton,new Insets(5,5,5,5));
             this.add(gameButton, i%3, i/3);
         }

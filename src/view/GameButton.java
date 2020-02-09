@@ -5,19 +5,19 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import model.GameData;
 
 import java.io.*;
 
 public class GameButton extends VBox {
 
-    //private GameData game;
+    private GameData game;
 
-    public GameButton(String s, String imgPath, GameGridView grid) {
-
-        //temporaire, a terme on lira la texture dans GameData
+    public GameButton(GameData game, GameGridView grid) {
+        this.game = game;
         FileInputStream inputstream = null;
         try {
-            inputstream = new FileInputStream(imgPath);
+            inputstream = new FileInputStream(game.getImages().get(0));
         }
         catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -29,7 +29,7 @@ public class GameButton extends VBox {
         imageView.setFitHeight(grid.getSizeY() / 3 - 30);
         imageView.setOnMouseClicked(event -> launchGame());
 
-        Label label = new Label(s);
+        Label label = new Label(game.getName());
 
         getChildren().addAll(imageView, label);
         this.setAlignment(Pos.CENTER);
@@ -39,7 +39,7 @@ public class GameButton extends VBox {
         try
         {
             Runtime runtime = Runtime.getRuntime();
-            Process p = runtime.exec("../tgd-grave-et/run.sh");
+            Process p = runtime.exec(game.getPath()+"/run.sh");
 
             BufferedReader output = new BufferedReader(new InputStreamReader(p.getInputStream()));
             String ligne;
