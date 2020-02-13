@@ -10,7 +10,6 @@ import model.GameData;
 import java.io.*;
 
 public class GameButton extends VBox {
-
     private GameData game;
 
     public GameButton(GameData game, GameGridView grid) {
@@ -25,7 +24,7 @@ public class GameButton extends VBox {
         Image image = new Image(inputstream);
         ImageView imageView = new ImageView();
         imageView.setImage(image);
-        imageView.setFitWidth(grid.getSizeX() / 3 - 15);
+        imageView.setFitWidth(grid.getSizeX() / 3 - 5);
         imageView.setFitHeight(grid.getSizeY() / 3 - 30);
         imageView.setOnMouseClicked(event -> launchGame());
 
@@ -33,6 +32,14 @@ public class GameButton extends VBox {
 
         getChildren().addAll(imageView, label);
         this.setAlignment(Pos.CENTER);
+    }
+
+    public void update(boolean isSelect) {
+        if (isSelect) {
+            setStyle("fx-border-color: #FFA500;-fx-border-style: solid;-fx-border-width: 5;");
+        }else{
+            setStyle("");
+        }
     }
 
     public void launchGame() {

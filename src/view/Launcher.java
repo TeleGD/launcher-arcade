@@ -3,6 +3,7 @@ package view;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.scene.paint.Color;
 import model.GameData;
 
 import java.io.File;
@@ -15,6 +16,7 @@ import java.util.Scanner;
 public class Launcher {
     private static Launcher instance;
     public static final String PURPLE =  "#6C2466";
+    public static final String PURPLE_DARK =  "#2C0436";
 
     private Scene scene;
 
@@ -33,8 +35,10 @@ public class Launcher {
         scene = new Scene(root, 1280, 720);
         root.setTop(new TopView());
         root.setBottom(new HelpView());
-        root.setCenter(new GameGridView());
-        GameView gameView = new GameView(game);
+        GameGridView gameGridView = new GameGridView();
+        gameGridView.update();
+        root.setCenter(gameGridView);
+        GameView gameView = new GameView(game,gameGridView);
         root.setRight(gameView);
         gameView.update();
 

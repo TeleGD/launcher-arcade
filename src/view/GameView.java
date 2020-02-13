@@ -15,21 +15,24 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class GameView extends VBox {
+    private GameGridView gameGridView;
     private GameData game;
-    public GameView(GameData game){
+    public GameView(GameData game,GameGridView gameGridView){
+        this.gameGridView = gameGridView;
         this.game = game;
         setStyle("-fx-background-color: "+Launcher.PURPLE);
-        this.setPrefWidth(400);
+        //this.setPrefWidth();
+        this.setWidth(Launcher.getInstance().getSizeX()/4);
+        this.setHeight(Launcher.getInstance().getSizeY()-100);
     }
 
     public void update(){
         getChildren().clear();
-        int currentImage =0;
 
         // image de présentation
         FileInputStream inputstream = null;
         try {
-            inputstream = new FileInputStream(game.getImages().get(currentImage));
+            inputstream = new FileInputStream(game.getImages().get(gameGridView.buttonSelected()));
         }
         catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -38,7 +41,7 @@ public class GameView extends VBox {
         ImageView imageView = new ImageView();
         imageView.setImage(image);
         getChildren().add(imageView);
-        imageView.setFitWidth(370);
+        imageView.setFitWidth(this.getWidth()-40);
         imageView.setPreserveRatio(true);
         this.setAlignment(Pos.TOP_CENTER);
 
@@ -69,7 +72,7 @@ public class GameView extends VBox {
             imageView.setImage(image);
             grid.setMargin(imageView,new Insets(5,5,5,5));
             grid.add(imageView,i%2,i/2);
-            imageView.setFitWidth(400/2 - 10);
+            imageView.setFitWidth(this.getWidth()/2 - 20);
             imageView.setPreserveRatio(true);
             i+=1;
         }
