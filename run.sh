@@ -1,2 +1,2 @@
-cd ../games/tgd-grave-et
-make run
+cd ../games/tgd-tncy-ball
+make build run

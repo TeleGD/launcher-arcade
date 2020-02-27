@@ -8,7 +8,7 @@ public class GameGridView extends GridPane {
     private int selectedButton;
 
     public GameGridView(){
-        selectedButton = 0;
+        selectedButton = 2;
         int number = Math.min(9, Launcher.getInstance().getGamesData().size()); // on dépasse l'space d'affichage
         for (int i = 0; i<number; i++){
             GameButton gameButton = new GameButton(Launcher.getInstance().getGamesData().get(i),this);

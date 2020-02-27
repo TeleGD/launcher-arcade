@@ -26,13 +26,14 @@ public class GameView extends VBox {
         this.setHeight(Launcher.getInstance().getSizeY()-100);
     }
 
-    public void update(){
+    public void update(GameData game){
+        this.game = game;
         getChildren().clear();
 
         // image de présentation
         FileInputStream inputstream = null;
         try {
-            inputstream = new FileInputStream(game.getImages().get(gameGridView.buttonSelected()));
+            inputstream = new FileInputStream(game.getImages().get(0));
         }
         catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -42,6 +43,7 @@ public class GameView extends VBox {
         imageView.setImage(image);
         getChildren().add(imageView);
         imageView.setFitWidth(this.getWidth()-40);
+        this.setMargin(imageView,new Insets(30,5,5,5));
         imageView.setPreserveRatio(true);
         this.setAlignment(Pos.TOP_CENTER);
 
@@ -57,7 +59,6 @@ public class GameView extends VBox {
         // autres images
         GridPane grid = new GridPane();
         getChildren().add(grid);
-        this.setAlignment(Pos.BOTTOM_CENTER);
         int i = 0;
         for(String img:game.getImages()){
             inputstream = null;

@@ -8,6 +8,7 @@ import javafx.scene.layout.VBox;
 import model.GameData;
 
 import java.io.*;
+import java.util.Scanner;
 
 public class GameButton extends VBox {
     private GameData game;
@@ -27,18 +28,18 @@ public class GameButton extends VBox {
         imageView.setFitWidth(grid.getSizeX() / 3 - 5);
         imageView.setFitHeight(grid.getSizeY() / 3 - 30);
         imageView.setOnMouseClicked(event -> launchGame());
-
+        imageView.setStyle("-fx-shape: 'M0 0 L0 50 L25 25 L50 50 L50 0 Z';");
         Label label = new Label(game.getName());
-
+        label.setStyle("-fx-font-weight: bold;-fx-font-size: 18pt;-fx-text-fill:white");
         getChildren().addAll(imageView, label);
         this.setAlignment(Pos.CENTER);
     }
 
     public void update(boolean isSelect) {
         if (isSelect) {
-            setStyle("fx-border-color: #FFA500;-fx-border-style: solid;-fx-border-width: 5;");
+            setStyle("-fx-border-radius: 25px;fx-border-color: #000000;-fx-border-style: solid;-fx-border-width: 10;-fx-border: 2px;-fx-background-color: #FFA500");
         }else{
-            setStyle("");
+            setStyle("-fx-background-color: #FFA500;-fx-border-radius: 25px;");
         }
     }
 
@@ -46,7 +47,11 @@ public class GameButton extends VBox {
         try
         {
             Runtime runtime = Runtime.getRuntime();
-            //TODO : écrire la commande à exécuter dans le fichier run.sh
+            // écrit la commande à exécuter dans le fichier run.sh
+            FileWriter file = new FileWriter("./run.sh",false);
+            file.write(game.getLaunch());
+            file.close();
+
             Process p = runtime.exec("./run.sh");
 
             System.out.println(java.time.LocalTime.now());
@@ -69,6 +74,7 @@ public class GameButton extends VBox {
 
             System.out.println(java.time.LocalTime.now());
             //TODO : ouvrir la fenetre
+
         }
         catch (IOException e)
         {
