@@ -8,7 +8,6 @@ import javafx.scene.layout.VBox;
 import model.GameData;
 
 import java.io.*;
-import java.util.Scanner;
 
 public class GameButton extends VBox {
     private GameData game;
@@ -25,22 +24,30 @@ public class GameButton extends VBox {
         Image image = new Image(inputstream);
         ImageView imageView = new ImageView();
         imageView.setImage(image);
-        imageView.setFitWidth(grid.getSizeX() / 3 - 5);
-        imageView.setFitHeight(grid.getSizeY() / 3 - 30);
-        imageView.setOnMouseClicked(event -> launchGame());
-        imageView.setStyle("-fx-shape: 'M0 0 L0 50 L25 25 L50 50 L50 0 Z';");
+        imageView.setFitWidth(grid.getSizeX() / 3 );
+        imageView.setFitHeight(grid.getSizeY() / 3 - 20);
+        imageView.setOnMouseClicked(event -> Launcher.getInstance().test());
+        imageView.setStyle("-fx-border-radius : 25px;");
         Label label = new Label(game.getName());
         label.setStyle("-fx-font-weight: bold;-fx-font-size: 18pt;-fx-text-fill:white");
         getChildren().addAll(imageView, label);
-        this.setAlignment(Pos.CENTER);
+        this.setAlignment(Pos.TOP_CENTER);
     }
 
     public void update(boolean isSelect) {
         if (isSelect) {
-            setStyle("-fx-border-radius: 25px;fx-border-color: #000000;-fx-border-style: solid;-fx-border-width: 10;-fx-border: 2px;-fx-background-color: #FFA500");
-        }else{
+            setStyle("fx-border-color: #000000;" +
+                    "-fx-border-style: solid ;" +
+                    "-fx-border-width: 5;" +
+                    "-fx-border-width: 0 0 5px 0;" +
+                    "-fx-background-color: #FFA500");
+        }else {
             setStyle("-fx-background-color: #FFA500;-fx-border-radius: 25px;");
         }
+    }
+
+    public GameData getGame(){
+        return game;
     }
 
     public void launchGame() {

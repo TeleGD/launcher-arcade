@@ -8,8 +8,8 @@ public class GameGridView extends GridPane {
     private int selectedButton;
 
     public GameGridView(){
-        selectedButton = 2;
-        int number = Math.min(9, Launcher.getInstance().getGamesData().size()); // on dépasse l'space d'affichage
+        selectedButton = 0;
+        int number = Math.min(9, Launcher.getInstance().getGamesData().size()); // on dépasse l'espace d'affichage
         for (int i = 0; i<number; i++){
             GameButton gameButton = new GameButton(Launcher.getInstance().getGamesData().get(i),this);
             this.setMargin(gameButton,new Insets(5,5,5,5));
@@ -22,10 +22,11 @@ public class GameGridView extends GridPane {
     }
 
     public double getSizeY(){
-        return Launcher.getInstance().getSizeY() - 100 ;
+        return Launcher.getInstance().getSizeY() - 120 ;
     }
 
-    public void update(){
+    public void update(int select){
+        selectedButton = select;
         int i = 0;
         for (Node button : getChildren()){
             ((GameButton)button).update(i==selectedButton);

@@ -1,9 +1,11 @@
 package view;
 
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import javafx.scene.paint.Color;
 import model.GameData;
 
 import java.io.File;
@@ -19,6 +21,9 @@ public class Launcher {
     public static final String PURPLE_DARK =  "#2C0436";
 
     private Scene scene;
+    private GameGridView gameGridView;
+    private GameView gameView;
+    private TopView topView;
 
     private ArrayList<GameData> gameData;
 
@@ -29,22 +34,30 @@ public class Launcher {
     public void start(Stage primaryStage) throws Exception{
         gameData = new ArrayList<GameData>();
         findGamesData();
-        GameData game = gameData.get(2);
+        GameData game = gameData.get(0);
         primaryStage.setTitle("Launcher TGD");
         BorderPane root = new BorderPane();
         scene = new Scene(root, 1920, 1000);
+        TopView topView = new TopView();
         root.setTop(new TopView());
         root.setBottom(new HelpView());
-        GameGridView gameGridView = new GameGridView();
-        gameGridView.update();
+        gameGridView = new GameGridView();
         root.setCenter(gameGridView);
-        GameView gameView = new GameView(game,gameGridView);
+        gameView = new GameView(game,gameGridView);
+        gameView.update();
         root.setRight(gameView);
-        gameView.update(game);
 
-        //scene.getStylesheets().add("style.css");
         primaryStage.setScene(scene);
+        primaryStage.setMaximized(true);
+        primaryStage.setFullScreen(true);
         primaryStage.show();
+        test();
+    }
+
+    public void update(int select){
+        gameGridView.update(select);
+        gameView.update();
+        //topView.update();
     }
 
     public static Launcher getInstance() {
@@ -88,12 +101,10 @@ public class Launcher {
                 String u = reader.nextLine();
                 description = u + "\n";
                 u = reader.nextLine();
-                while (reader.hasNextLine() && u.equals("make :")) {
+                while (reader.hasNextLine() && !u.equals("make :")) {
                     description += u + "\n";
                     u = reader.nextLine();
                 }
-                if (reader.hasNextLine())
-                    reader.nextLine();
                 while (reader.hasNextLine()){
                     u = reader.nextLine();
                     launch += u + "\n";
@@ -117,5 +128,8 @@ public class Launcher {
             }
             gameData.add(new GameData(name, description,"../games/"+p,launch,images)); // on sauvegarde tout dans un GameData
         }
+    }
+    public void test() {
+        update((gameGridView.buttonSelected()+1)%3);
     }
 }
